@@ -44,38 +44,38 @@ const createCollegeData = async function (req, res) {
   } else if (name == undefined || name.trim() == "") {
     res
       .status(400)
-      .send({ status: false, msg: "plese enter the name of your college" });
+      .send({ status: false,message: "plese enter the name of your college" });
   }else if(!isValidName(name)){
     res.status(400)
-    .send({ status: false, msg: "plese enter a valid name of your college" });
+    .send({ status: false, message: "plese enter a valid name of your college" });
   
   }else if(!isValidaName(name)){
     res.status(400)
-    .send({ status: false, msg: "college Name should only have lower case letters only" });
+    .send({ status: false,  message:"college Name should only have lower case letters only" });
   
   }else if(fiterName){
     res.status(400)
-    .send({ status: false, msg: "this college name already exist in collection" });
+    .send({ status: false, message: "this college name already exist in collection" });
   } else if (fullName == undefined || fullName.trim() == "") {
     res
       .status(400)
-      .send({ status: false, msg: "plese enter the fullName of your college" });
+      .send({ status: false, message: "plese enter the fullName of your college" });
     
     }else if(!isValidFullName(fullName)){
        
         res.status(400)
-        .send({ status: false, msg: "plese enter a valid fullname of your college" });
+        .send({ status: false, message: "plese enter a valid fullname of your college" });
       
         
     } else if (logoLink == undefined || logoLink.trim() == "") {
-    res.status(400).send({ status: false, msg: "plese enter logoLink" });
+    res.status(400).send({ status: false, message: "plese enter logoLink" });
 
     }else if(!urlreg.test(logoLink)){
-        res.status(400).send({ status: false, msg: "plese enter valid logoLink" });
+        res.status(400).send({ status: false, message: "plese enter valid logoLink" });
     
      } else if(data["isDeleted"]==true){
           return  res.status(400)
-          .send({ status: false, msg:"plese check your isDeleted key status" });
+          .send({ status: false, message:"plese check your isDeleted key status" });
       
   
   
@@ -86,7 +86,7 @@ const createCollegeData = async function (req, res) {
       .status(201)
       .send({
         status: true,
-        msg: "your data is successfully created",
+        message: "your data is successfully created",
         data: collegeData,
       });
   }

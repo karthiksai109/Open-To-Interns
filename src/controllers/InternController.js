@@ -55,33 +55,33 @@ const createIntern = async function (req, res) {
     if (Object.keys(data).length==0) {
       return res
         .status(400)
-        .send({ status: false, msg: "plese enter some data in order to create" });
+        .send({ status: false, message: "plese enter some data in order to create" });
     } else if (name == undefined || name.trim() == "") {
       res
         .status(400)
-        .send({ status: false, msg: "plese enter your name" });
+        .send({ status: false, message: "plese enter your name" });
     }else if(!isValidFullName(name.trim())){
         res.status(400)
-        .send({ status: false, msg: "plese enter a valid name" });
+        .send({ status: false, message: "plese enter a valid name" });
     }else if(email==undefined || email.trim()==""){
         return res
          .status(400)
-         .send({ status: false, msg: "plese enter your emailId" })
+         .send({ status: false, message: "plese enter your emailId" })
      
      }else if(!validateEmail(email.trim())){
         return res
          .status(400)
-         .send({ status: false, msg: "plese enter valid emailId" })
+         .send({ status: false, message: "plese enter valid emailId" })
  
      }else if(fiteremail){
         return res
          .status(400)
-         .send({ status: false, msg: " emailId already registered" })  
+         .send({ status: false, message: " emailId already registered" })  
     
     } else if(mobile==undefined || mobile.trim() ==""){
         res
         .status(400)
-        .send({ status: false, msg: "plese enter your mobieNumber" })
+        .send({ status: false, message: "plese enter your mobieNumber" })
 
     }else if (!/^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([ -]?)\d{3}([ -]?)\d{4})$/.test(mobile.trim())) {
         return res.status(400).send({ status:false, message:"Enter valid mobile number" })
@@ -93,14 +93,14 @@ const createIntern = async function (req, res) {
     }else if (collegeName == undefined || collegeName.trim() == "") {
       return res
         .status(400)
-        .send({ status: false, msg: "plese enter of your collegeName" });
+        .send({ status: false, message: "plese enter of your collegeName" });
     }else if(!isValidName(collegeName.trim())){
        
        return  res.status(400)
-        .send({ status: false, msg: "plese enter a valid name of your college" });
+        .send({ status: false, message: "plese enter a valid name of your college" });
     }else if(data["isDeleted"]==true){
         return  res.status(400)
-        .send({ status: false, msg:"plese check your isDeleted key status" });
+        .send({ status: false, message:"plese check your isDeleted key status" });
     
     } else {
         
@@ -118,7 +118,7 @@ const createIntern = async function (req, res) {
         .status(201)
         .send({
           status:true,
-          msg: "your data is successfully created",
+          message: "your data is successfully created",
           data: collegeData,
         
         });
@@ -137,17 +137,17 @@ const getDetails= async function(req,res){
 try{
     let data=req.query["collegeName"]
     if(!isValideName(data)){
-        return res.status(400).send({status:false,msg:`college name should only consist of alphabets`})
+        return res.status(400).send({status:false,message:`college name should only consist of alphabets`})
     }
     if(!data){
-        return res.status(400).send({status:false,msg:`plese enter collegeName  `})
+        return res.status(400).send({status:false,message:`plese enter collegeName  `})
     }
     console.log(data)
     let getData=await collegeModel.findOne({name:{$eq:data},isDeleted:false})
    
 
     if(!getData){
-        res.status(404).send({status:false,msg:`sorry no collage data found with this collegeName `})
+        res.status(404).send({status:false,message:`sorry no collage data found with this collegeName `})
     }
     else{
         let intern=await InternModel.find({"collegeId":{$eq:getData["_id"]},isDeleted:false}).select({name:1,email:1,mobile:1})
